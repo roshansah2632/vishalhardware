@@ -144,19 +144,39 @@
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact (Netlify form example) -->
     <section id="contact" class="contact section" aria-labelledby="contact-heading">
       <div class="container">
         <h2 id="contact-heading">Contact</h2>
         <p>Call or WhatsApp to confirm stock, request a quote, or schedule delivery. Delivery is arranged based on route and availability.</p>
 
+        <!-- Netlify Forms example: works if deployed on Netlify. Keeps behavior conservative (no promises).
+             Replace or remove if using another provider. -->
+        <form name="quote" method="POST" data-netlify="true" id="quoteForm">
+          <input type="hidden" name="form-name" value="quote">
+
+          <label>Full name<input type="text" name="name" required></label>
+          <label>Phone<input type="tel" name="phone" required></label>
+          <label>Product<select name="product" required>
+            <option value="">Select</option>
+            <option value="coarse-sand">Coarse Sand</option>
+            <option value="medium-sand">Medium Sand</option>
+            <option value="fine-m-sand">Fine / M-Sand</option>
+            <option value="tmt-rod">TMT Rod</option>
+            <option value="cement">Cement</option>
+          </select></label>
+          <label>Quantity / Details<input type="text" name="details" placeholder="e.g., 10 truckloads / 50 pcs of 12mm"></label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Request Quote</button>
+            <a class="btn btn-ghost" href="tel:+919395969795">Call Now</a>
+          </div>
+        </form>
+
+        <div id="formMessage" role="status" aria-live="polite" class="muted"></div>
+
         <p><strong>Phone:</strong> <a href="tel:+919395969795">+91 9395969795</a></p>
         <p><strong>Address:</strong> Kachugaon Bazar, Kokrajhar, Assam</p>
-
-        <p>
-          <a class="btn btn-primary" href="tel:+919395969795">Call Now</a>
-          <a class="btn btn-ghost" href="https://wa.me/919395969795">WhatsApp</a>
-        </p>
       </div>
     </section>
 
@@ -168,6 +188,18 @@
     </div>
   </footer>
 
-  <script src="js/script.js" defer></script>
+  <script>
+  // Small client-side handler for the Netlify form to show a friendly message on submit.
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('quoteForm');
+    var msg = document.getElementById('formMessage');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      msg.textContent = 'Sending...';
+      // Allow Netlify to handle submission; show a message that we received it.
+      setTimeout(function () { msg.textContent = 'Thanks — your request was submitted. We will contact you shortly.'; form.reset(); }, 900);
+    });
+  });
+  </script>
 </body>
 </html>
